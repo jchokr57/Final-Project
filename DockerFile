@@ -1,0 +1,19 @@
+# Base image
+FROM ubuntu:20.04
+
+# Install dependencies
+RUN apt-get update && \
+    apt-get install -y build-essential git
+
+# Copy application files
+COPY . /app
+
+# Install application dependencies
+WORKDIR /app
+RUN npm install
+
+# Expose necessary ports
+EXPOSE 3000
+
+# Set entry point
+CMD ["npm", "start"]
