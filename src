@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Start the application
+docker run -d -p 8080:8080 <docker-image>:<docker-tag>
+
+# Wait for the application to start
+sleep 10
+
+# Execute automated tests
+curl http://localhost:8080/healthcheck
+
+# Stop the application
+docker stop $(docker ps -a -q)
+
+
+FROM openjdk:8-jdk-alpine
+
+WORKDIR /app
+
+COPY target/<jar-file>.jar /app/app.jar
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
+
+
+/target/
+*.class
+*.jar
+*.war
+.DS_Store
+.idea/
+*.iml
